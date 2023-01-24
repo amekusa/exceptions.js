@@ -1,0 +1,64 @@
+{
+  "type": "module",
+  "name": "@amekusa/exceptions",
+  "version": "0.1.0",
+  "description": "Common Exceptions",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "exports": {
+    "import": "./dist/bundle.js",
+    "require": "./dist/bundle.cjs"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run clean && npm run test && npm run build",
+    "watch": "npm-watch",
+    "build": "rollup -c",
+    "test": "c8 mocha --enable-source-maps",
+    "codecov": "c8 report --reporter=text-lcov > coverage.lcov && codecov",
+    "clean": "find . -name '.DS_Store' -not -path '*/node_modules/*' | xargs rm -r",
+    "docs": "npm run docs:gen && npm run docs:publish",
+    "docs:gen": "npm run docs:clean; jsdoc -c jsdoc.json && cd docs/$npm_package_name && ln -sfn $npm_package_version latest",
+    "docs:clean": "[ -d docs/$npm_package_name/$npm_package_version ] && rm -rf docs/$npm_package_name/$npm_package_version",
+    "docs:publish": "git subtree push --prefix docs/$npm_package_name/$npm_package_version origin gh-pages"
+  },
+  "watch": {
+    "build": {
+      "inherit": true,
+      "patterns": "src",
+      "extensions": "js"
+    },
+    "test": {
+      "inherit": true,
+      "patterns": ["test", "dist"],
+      "extensions": ["js", "cjs"]
+    },
+    "docs:gen": {
+      "inherit": true,
+      "patterns": [
+        "src",
+        "README.md",
+        "jsdoc.json"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amekusa/exceptions.js.git"
+  },
+  "keywords": [
+    "exception",
+    "error",
+    "debug"
+  ],
+  "author": "amekusa (https://amekusa.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amekusa/exceptions.js/issues"
+  },
+  "homepage": "https://github.com/amekusa/exceptions.js#readme",
+  "devDependencies": {
+    "docolatte": "^3.1.0"
+  }
+}

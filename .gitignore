@@ -1,0 +1,4 @@
+*.lcov
+/package-lock.json
+/dist/
+/coverage/
